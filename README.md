@@ -31,4 +31,39 @@
             input.clear()
             input.send_keys(page)
             submit.click()
+```  
+5. 判断页面是否跳转成功  
+通过判断页码是否在存贮页码的节点中，和商品信息节点中是否存在商品  
+![图3](https://github.com/zloveh/TaobaoSpider/blob/master/image/3.png)  
+```  
+wait.until(
+            EC.text_to_be_present_in_element(
+                (By.CSS_SELECTOR, "#mainsrp-pager li.item.active > span"), str(page)
+            )
+        )
+        wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, ".m-itemlist .items .item")
+            )
+        )
+```  
+当确定页面跳转成功并且商品信息已经加载出来就对商品进行解析get_products()，并且还要对上述代码进行try-except检测， 出现异常则要重新输入页码进行解析， 这样可以保证程序不会出现终止。  
+6. 解析页面   
+采用pyquery解析出商品信息：  
 ```
+html = driver.page_source
+    doc = pq(html)
+    items = doc("#mainsrp-itemlist .items .item").items()
+    for item in items:
+        product = {
+            "image": item.find(".pic .img").attr("data-src"),
+            "price": item.find(".price").text(),
+            "deal": item.find(".deal-cnt").text(),
+            "title": item.find(".title").text(),
+            "shop": item.find(".shop").text(),
+            "location": item.find(".location").text(),
+        }
+        print(product)
+        save_mongo(product)
+```  
+这里把解析出的商品信息构造成一个字典， 便于向MongoDB数据库存储
