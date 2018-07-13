@@ -16,5 +16,19 @@
 请求网页：  
     url = "https://s.taobao.com/search?q=" + KEYWORD  
     driver.get(url)  
-定位到页码输入框与确定按钮，右键点击检查，定位到元素位置，![图2](https://github.com/zloveh/TaobaoSpider/blob/master/image/2.png)
-        
+定位到页码输入框与确定按钮，右键点击检查，定位到元素位置，![图2](https://github.com/zloveh/TaobaoSpider/blob/master/image/2.png)  
+```  
+ input = wait.until(
+                EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, "#mainsrp-pager div.form > input")
+                )
+            )
+            submit = wait.until(
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, "#mainsrp-pager div.form > span.btn.J_Submit")
+                )
+            )
+            input.clear()
+            input.send_keys(page)
+            submit.click()
+```
