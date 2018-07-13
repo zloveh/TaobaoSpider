@@ -41,9 +41,9 @@ wait.until(
                 (By.CSS_SELECTOR, "#mainsrp-pager li.item.active > span"), str(page)
             )
         )
-        wait.until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, ".m-itemlist .items .item")
+ wait.until(
+           EC.presence_of_element_located(
+           (By.CSS_SELECTOR, ".m-itemlist .items .item")
             )
         )
 ```  
