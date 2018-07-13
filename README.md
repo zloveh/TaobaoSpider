@@ -66,4 +66,34 @@ html = driver.page_source
         print(product)
         save_mongo(product)
 ```  
-这里把解析出的商品信息构造成一个字典， 便于向MongoDB数据库存储
+这里把解析出的商品信息构造成一个字典， 便于向MongoDB数据库存储  
+7. MongoDB存储信息  
+导入mongo模块, 配置基本信息   
+```  
+import pymongo
+MONGO_URL = "localhost"
+MONGO_DB = "taobao"
+MONGO_COLLECTION = "product"
+
+def save_mongo(product):
+    client = pymongo.MongoClient(MONGO_URL)
+    db = client[MONGO_DB]
+    collection = db[MONGO_COLLECTION]
+    try:
+        if collection.insert_one(product):
+            print("存储到MongoDB成功")
+    except:
+        print("存储失败")
+```  
+8. 循环遍历爬取每一页商品信息  
+```  
+def main():
+    """
+    遍历每一页
+    :return:
+    """
+    for page in range(1, MAX_PAGE + 1):
+        index_page(page)
+        # break                   # 便于调试
+
+```
