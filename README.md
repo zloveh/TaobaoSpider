@@ -96,4 +96,8 @@ def main():
         index_page(page)
         # break                   # 便于调试
 
-```
+```  
+成果：  
+![1](https://github.com/zloveh/TaobaoSpider/blob/master/image/5.png)  
+![2](https://github.com/zloveh/TaobaoSpider/blob/master/image/6.png)  
+***完整代码： Selenium_taobao.py***
